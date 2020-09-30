@@ -15,7 +15,7 @@ data.forEach(data => {
 
 //JavaScript that listends for events through the date/time column to find rows that match user input.
 // Select the button
-let button = d3.select("#filter-btn");
+let button = d3.select("#filter_table");
 
 // Select the form
 let form = d3.select("#form");
