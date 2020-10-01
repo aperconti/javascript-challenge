@@ -15,7 +15,7 @@ data.forEach(data => {
 
 //JavaScript that listends for events through the date/time column to find rows that match user input.
 // Select the button
-let button = d3.select("#filter_table");
+let filterButton = d3.select("#filter_table");
 
 // Select the form
 let form = d3.select("#form");
@@ -27,32 +27,32 @@ const runEnter = () => {
     d3.event.preventDefault();
 
     // Select the input element and get the raw HTML node
-    let inputElement = d3.select("#date");
+    let dateElement = d3.select("#date");
 
     // Get the value property of the input element
     // let inputValue = inputElement.property("value");
-    const value = inputElement.property("value")
+    const dataElementValue = dateElement.property("value")
 
     // Print the value to the console
-    console.log(value);
+    console.log(dataElementValue);
 
     //Use d3 to update each cell's text with
     // weather report values (weekday, date, high, low)
     tbody.selectAll("tr").remove();
 
     data.forEach(item => {
-        if (item.datetime == value) {
+        if (item.datetime == dataElementValue) {
             let row = tbody.append("tr");
-            Object.values(item).forEach(value => {
+            Object.values(item).forEach(ufoSighting => {
                 // Append a cell to the row for each value
                 // in the weather report object
                 var cell = row.append("td");
-                cell.text(value);
+                cell.text(ufoSighting);
             });
         }
     });
 }
 
 // Create event handlers for clicking the button or pressing the enter key
-button.on("click", runEnter);
+filterButton.on("click", runEnter);
 form.on("submit", runEnter);
