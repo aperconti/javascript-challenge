@@ -1,21 +1,9 @@
 // Get a reference to the table body
 const tbody = d3.select("tbody");
 
-//Use d3 to update each cell's text with
-// weather report values (weekday, date, high, low)
-data.forEach(data => {
-    let row = tbody.append("tr");
-    Object.values(data).forEach(value => {
-        // Append a cell to the row for each value
-        // in the weather report object
-        var cell = row.append("td");
-        cell.text(value);
-    });
-});
-
 //JavaScript that listends for events through the date/time column to find rows that match user input.
 // Select the button
-let filterButton = d3.select("#filter_table");
+let filterButton = d3.select("#filterTableButton");
 
 // Select the form
 let form = d3.select("#form");
@@ -28,28 +16,47 @@ const runEnter = () => {
 
     // Select the input element and get the raw HTML node
     let dateElement = d3.select("#date");
+    let cityElement = d3.select("#city");
+    // let stateElement = d3.select("#state")
+
 
     // Get the value property of the input element
     // let inputValue = inputElement.property("value");
-    const dataElementValue = dateElement.property("value")
+    const dateElementValue = dateElement.property("value").toLowerCase()
+    const cityElementValue = cityElement.property("value").toLowerCase()
+    // const stateElementValue = stateElement.property("value").toLowerCase()
 
     // Print the value to the console
-    console.log(dataElementValue);
+    console.log(dateElementValue);
 
-    //Use d3 to update each cell's text with
-    // weather report values (weekday, date, high, low)
+    //Use d3 to update each cell's text with UFO data
     tbody.selectAll("tr").remove();
 
     data.forEach(item => {
-        if (item.datetime == dataElementValue) {
-            let row = tbody.append("tr");
+        let row = null;
+        if (dateElementValue && !cityElementValue) {
+
+            if (item.datetime.includes(dateElementValue)) {
+                row = tbody.append("tr");
+            }
+        } else if (!dateElementValue && cityElementValue) {
+            if (item.city.includes(cityElementValue)) {
+                row = tbody.append("tr");
+            }
+        } else if (dateElementValue && cityElementValue) {
+            if (item.datetime.includes(dateElementValue) && item.city.includes(cityElementValue)) {
+                row = tbody.append("tr");
+            }
+        } else {
+            row = tbody.append("tr");
+        }
+        if (row) {
             Object.values(item).forEach(ufoSighting => {
-                // Append a cell to the row for each value
-                // in the weather report object
                 var cell = row.append("td");
                 cell.text(ufoSighting);
             });
-        }
+        };
+
     });
 }
 
