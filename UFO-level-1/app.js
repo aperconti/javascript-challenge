@@ -1,8 +1,7 @@
 // Get a reference to the table body
 const tbody = d3.select("tbody");
 
-//Use d3 to update each cell's text with
-// weather report values (weekday, date, high, low)
+//Use d3 to update each cell's text with UFO sighting data
 data.forEach(data => {
     let row = tbody.append("tr");
     Object.values(data).forEach(value => {
@@ -36,8 +35,7 @@ const runEnter = () => {
     // Print the value to the console
     console.log(value);
 
-    //Use d3 to update each cell's text with
-    // weather report values (weekday, date, high, low)
+    //remove appended data and add back only the data that meets the search criteria
     tbody.selectAll("tr").remove();
 
     data.forEach(item => {
